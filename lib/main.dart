@@ -2,11 +2,10 @@ import 'dart:io';
 
 import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:calorie_tracker_app/util/constants.dart';
+import 'package:calorie_tracker_app/widget/bottom_bar/bottom_bar_screen.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-
-import 'feature/home/screen/home_screen.dart';
 
 void main() async {
   // 确保Flutter小部件绑定已初始化，这对于所有后续操作都是必要的
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness:
-      !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
+          !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
@@ -41,7 +40,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: HomeScreen(),
+      home: BottomBarScreen(),
     );
   }
 }
