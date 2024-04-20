@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../widget/rename_dialog.dart';
 
-class AdditionBarContent extends StatelessWidget {
+class AdditionBarView extends StatelessWidget {
   final TextEditingController _vc = TextEditingController();
 
   final renderOverlay = true;
@@ -17,19 +17,8 @@ class AdditionBarContent extends StatelessWidget {
   final speedDialDirection = SpeedDialDirection.up;
   final buttonSize = const Size(56.0, 56.0);
   final childrenButtonSize = const Size(56.0, 56.0);
-  final selectedfABLocation = FloatingActionButtonLocation.centerDocked;
-  final items = [
-    FloatingActionButtonLocation.startFloat,
-    FloatingActionButtonLocation.startDocked,
-    FloatingActionButtonLocation.centerFloat,
-    FloatingActionButtonLocation.endFloat,
-    FloatingActionButtonLocation.endDocked,
-    FloatingActionButtonLocation.startTop,
-    FloatingActionButtonLocation.centerTop,
-    FloatingActionButtonLocation.endTop,
-  ];
 
-  AdditionBarContent({super.key});
+  AdditionBarView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +31,11 @@ class AdditionBarContent extends StatelessWidget {
         return true;
       },
       child: Scaffold(
-        backgroundColor: Colors.transparent, // 显式设置Scaffold背景为透明
-        floatingActionButtonLocation: selectedfABLocation,
+        /// 显式设置Scaffold背景为透明
+        backgroundColor: Colors.transparent,
+
+        /// 底部置中
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: SpeedDial(
           // animatedIcon: AnimatedIcons.menu_close,
           // animatedIconTheme: IconThemeData(size: 22.0),
