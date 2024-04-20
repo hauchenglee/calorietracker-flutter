@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:calorie_tracker_app/util/app_theme.dart';
-import 'package:calorie_tracker_app/util/hex_color.dart';
-import 'package:calorie_tracker_app/widget/bottom_bar/tab_icon_data.dart';
+import 'package:calorie_tracker_app/view/addition/addition_bar_view.dart';
+import 'package:calorie_tracker_app/view/bottom_bar/tab_icon_data.dart';
 import 'package:flutter/material.dart';
 
 class BottomBarView extends StatefulWidget {
@@ -154,56 +154,10 @@ class _BottomBarViewState extends State<BottomBarView>
                         CurvedAnimation(
                             parent: animationController!,
                             curve: Curves.fastOutSlowIn)),
-                    child: Container(
-                      // alignment: Alignment.center,s
-                      decoration: BoxDecoration(
-                        color: HexColor('#A2DCEE'),
-                        /**
-                         * 这段代码是一个渐变色设置，使用的是 LinearGradient 类，它属于 Flutter 中用于定义线性渐变的小部件。
-                         * 在这里，渐变被应用于某个组件的 decoration 属性，比如一个 Container、BoxDecoration 或者其他可视化元素的背景。
-                         */
-                        // gradient: LinearGradient(
-                        //     colors: [
-                        //       AppTheme.nearlyDarkBlue,
-                        //       HexColor('#6A88E5'),
-                        //     ],
-                        //     begin: Alignment.topLeft,
-                        //     end: Alignment.bottomRight),
-                        shape: BoxShape.circle,
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: AppTheme.nearlyDarkBlue.withOpacity(0.4),
-                              offset: const Offset(8.0, 16.0),
-                              blurRadius: 16.0),
-                        ],
-                      ),
-                      child: Material(
-                        /// 设置 Material 小部件的背景颜色为透明。这样做是为了确保水墨效果（ink effect）是在一个透明的背景上呈现，不影响其他背景元素。
-                        color: Colors.transparent,
-                        child: InkWell(
-                          /// 设置触摸波纹效果的颜色。这里使用白色的波纹，不过透明度设置为0.1，使得波纹效果非常微弱，几乎看不清，仅有轻微的视觉提示。
-                          splashColor: Colors.white.withOpacity(0.1),
-
-                          /// 设置高亮颜色为透明。在材料设计中，高亮颜色是指触摸或点击小部件时的背景颜色。透明表示没有明显的颜色变化。
-                          highlightColor: Colors.transparent,
-
-                          /// 设置聚焦时的颜色为透明。聚焦通常发生在用户通过键盘导航到小部件或小部件成为焦点时。透明意味着在聚焦时不会有任何颜色变化。
-                          focusColor: Colors.transparent,
-
-                          /// onTap 是一个回调函数，当用户点击这个 InkWell 时会被触发。widget.addClick 可能是外部传入的一个函数，用于处理点击事件。
-                          onTap: widget.addClick,
-                          child: const Icon(
-                            /// 这是 InkWell 的子小部件，一个图标。
-                            Icons.add,
-
-                            /// 设置图标的颜色为白色，这通常是为了确保图标在任何背景上都能清晰可见。
-                            color: AppTheme.white,
-
-                            /// 设置图标的大小为32像素。这是图标的尺寸，确保图标足够大，用户可以容易点击。
-                            size: 32,
-                          ),
-                        ),
-                      ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child:
+                          AdditionBarContent(), // 假设 AdditionBarView 是你要显示的自定义视图或部件
                     ),
                   ),
                 ),

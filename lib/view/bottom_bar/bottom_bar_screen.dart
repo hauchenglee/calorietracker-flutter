@@ -3,7 +3,7 @@ import 'package:calorie_tracker_app/feature/food/food_screen.dart';
 import 'package:calorie_tracker_app/feature/home/home_screen.dart';
 import 'package:calorie_tracker_app/feature/more/more_screen.dart';
 import 'package:calorie_tracker_app/util/app_theme.dart';
-import 'package:calorie_tracker_app/widget/bottom_bar/tab_icon_data.dart';
+import 'package:calorie_tracker_app/view/bottom_bar/tab_icon_data.dart';
 import 'package:flutter/material.dart';
 
 import 'bottom_bar_view.dart';

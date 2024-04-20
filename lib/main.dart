@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:calorie_tracker_app/util/constants.dart';
-import 'package:calorie_tracker_app/widget/bottom_bar/bottom_bar_screen.dart';
+import 'package:calorie_tracker_app/view/bottom_bar/bottom_bar_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
