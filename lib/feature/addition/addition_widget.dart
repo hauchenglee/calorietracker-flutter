@@ -1,13 +1,11 @@
-import 'package:calorie_tracker_app/view/addition/addition_quick_view.dart';
+import 'package:calorie_tracker_app/feature/addition/addition_form_screen.dart';
+import 'package:calorie_tracker_app/util/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../widget/rename_dialog.dart';
-
-class AdditionBarView extends StatelessWidget {
-  final TextEditingController _vc = TextEditingController();
-
+/// 新增组合按钮
+class AdditionWidget extends StatelessWidget {
   final renderOverlay = true;
   final switchLabelPosition = false;
   final extend = false;
@@ -18,7 +16,7 @@ class AdditionBarView extends StatelessWidget {
   final buttonSize = const Size(56.0, 56.0);
   final childrenButtonSize = const Size(56.0, 56.0);
 
-  AdditionBarView({super.key});
+  AdditionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -106,25 +104,10 @@ class AdditionBarView extends StatelessWidget {
               child: const Icon(FontAwesomeIcons.rocket),
               backgroundColor: Colors.grey,
               foregroundColor: Colors.white,
-              label: '快速添加',
+              label: labelIconQuick,
               onTap: () => {
-                showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (context) {
-                    return RenameDialog(
-                      contentWidget: AdditionQuickView(
-                        title: "請輸入飲食記錄",
-                        okBtnTap: () {
-                          print(
-                            "输入框中的文字为:${_vc.text}",
-                          );
-                        },
-                        vc: _vc,
-                        cancelBtnTap: () {},
-                      ),
-                    );
-                  },
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AdditionFormScreen()),
                 ),
               },
             ),
@@ -132,25 +115,10 @@ class AdditionBarView extends StatelessWidget {
               child: const Icon(FontAwesomeIcons.chartBar),
               backgroundColor: Colors.grey,
               foregroundColor: Colors.white,
-              label: '新建食物',
+              label: labelIconDetail,
               onTap: () => {
-                showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (context) {
-                    return RenameDialog(
-                      contentWidget: AdditionQuickView(
-                        title: "請輸入食物數據",
-                        okBtnTap: () {
-                          print(
-                            "输入框中的文字为:${_vc.text}",
-                          );
-                        },
-                        vc: _vc,
-                        cancelBtnTap: () {},
-                      ),
-                    );
-                  },
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AdditionFormScreen()),
                 ),
               },
             ),
