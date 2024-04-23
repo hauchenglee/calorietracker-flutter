@@ -1,20 +1,22 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 
-class ImagePickerWidget extends StatefulWidget {
+class ImagePickerFilenameWidget extends StatefulWidget {
   final Function(File?) onImagePicked;
 
-  const ImagePickerWidget({Key? key, required this.onImagePicked}) : super(key: key);
+  const ImagePickerFilenameWidget({Key? key, required this.onImagePicked})
+      : super(key: key);
 
   @override
-  _ImagePickerWidgetState createState() => _ImagePickerWidgetState();
+  _ImagePickerFilenameWidgetState createState() => _ImagePickerFilenameWidgetState();
 }
 
-class _ImagePickerWidgetState extends State<ImagePickerWidget> {
-  File? _selectedImage;
+class _ImagePickerFilenameWidgetState extends State<ImagePickerFilenameWidget> {
+  File? _image;
   final ImagePicker _picker = ImagePicker();
   String? _imageName;
 
@@ -22,12 +24,10 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
     try {
       final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-
-
+        // 打印
         final imageTemp = File(pickedFile.path);
         final imageBytes = imageTemp.readAsBytesSync();
         print("Image Size: ${imageBytes.length / 1024} KB");
-
 
         File imageFile = File(pickedFile.path);
 
@@ -50,13 +50,13 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
         print("Image Dimensions: ${compressedImage!.length} (compressed)");
 
         // 打印MIME类型（简单判断）
-        String mimeType = 'image/${path.extension(imageFile.path).replaceFirst('.', '')}';
+        String mimeType =
+            'image/${path.extension(imageFile.path).replaceFirst('.', '')}';
         print("Content Type: $mimeType");
 
-
         setState(() {
-          _selectedImage = File(pickedFile.path);
-          _imageName = path.basename(_selectedImage!.path);
+          _image = File(pickedFile.path);
+          _imageName = path.basename(_image!.path);
         });
       }
     } catch (e) {

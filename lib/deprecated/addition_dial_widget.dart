@@ -1,11 +1,10 @@
 import 'package:calorie_tracker_app/feature/addition/addition_form_screen.dart';
-import 'package:calorie_tracker_app/util/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// 新增组合按钮
-class AdditionWidget extends StatelessWidget {
+class AdditionDialWidget extends StatelessWidget {
   final renderOverlay = true;
   final switchLabelPosition = false;
   final extend = false;
@@ -16,7 +15,7 @@ class AdditionWidget extends StatelessWidget {
   final buttonSize = const Size(56.0, 56.0);
   final childrenButtonSize = const Size(56.0, 56.0);
 
-  AdditionWidget({super.key});
+  AdditionDialWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +103,7 @@ class AdditionWidget extends StatelessWidget {
               child: const Icon(FontAwesomeIcons.rocket),
               backgroundColor: Colors.grey,
               foregroundColor: Colors.white,
-              label: labelIconQuick,
+              label: "QUICK_ADD_LABEL",
               onTap: () => {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => AdditionFormScreen()),
@@ -115,7 +114,7 @@ class AdditionWidget extends StatelessWidget {
               child: const Icon(FontAwesomeIcons.chartBar),
               backgroundColor: Colors.grey,
               foregroundColor: Colors.white,
-              label: labelIconDetail,
+              label: "DETAIL_ADD_LABEL",
               onTap: () => {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => AdditionFormScreen()),

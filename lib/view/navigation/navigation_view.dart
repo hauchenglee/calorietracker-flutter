@@ -1,4 +1,3 @@
-import 'package:calorie_tracker_app/feature/addition/addition_widget.dart';
 import 'package:calorie_tracker_app/feature/diary/diary_screen.dart';
 import 'package:calorie_tracker_app/feature/food/food_screen.dart';
 import 'package:calorie_tracker_app/feature/home/home_screen.dart';
@@ -86,14 +85,6 @@ class _NavigationViewState extends State<NavigationView>
             bottom: 0,
             child: bottomBar(),
           ),
-          Positioned(
-            right: 12,
-            bottom: 60 +
-                MediaQuery.of(context)
-                    .padding
-                    .bottom, // 调整 bottomBar 的高度加上安全区域的距离
-            child: _additionWidget(),
-          ),
         ],
       );
     }
@@ -125,15 +116,5 @@ class _NavigationViewState extends State<NavigationView>
       default:
         return HomeScreen(animationController: animationController);
     }
-  }
-
-  /// 负责处理加号
-  Widget _additionWidget() {
-    return Container(
-      width: 38 * 2.0,
-      height: 32 * 2.0,
-      color: Colors.transparent,
-      child: AdditionWidget(),
-    );
   }
 }
