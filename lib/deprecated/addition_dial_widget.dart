@@ -1,4 +1,4 @@
-import 'package:calorie_tracker_app/feature/addition/addition_form_screen.dart';
+import 'package:calorie_tracker_app/feature/chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -106,7 +106,7 @@ class AdditionDialWidget extends StatelessWidget {
               label: "QUICK_ADD_LABEL",
               onTap: () => {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => AdditionFormScreen()),
+                  MaterialPageRoute(builder: (context) => ChatScreen()),
                 ),
               },
             ),
@@ -117,7 +117,7 @@ class AdditionDialWidget extends StatelessWidget {
               label: "DETAIL_ADD_LABEL",
               onTap: () => {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => AdditionFormScreen()),
+                  MaterialPageRoute(builder: (context) => ChatScreen()),
                 ),
               },
             ),

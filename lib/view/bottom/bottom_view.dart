@@ -1,4 +1,4 @@
-import 'package:calorie_tracker_app/feature/addition/addition_form_screen.dart';
+import 'package:calorie_tracker_app/feature/chat/chat_screen.dart';
 import 'package:calorie_tracker_app/util/app_color.dart';
 import 'package:calorie_tracker_app/view/bottom/tab_clipper.dart';
 import 'package:calorie_tracker_app/view/bottom/tab_icon_data.dart';
@@ -51,7 +51,7 @@ class _BottomViewState extends State<BottomView> with TickerProviderStateMixin {
         return Transform(
           transform: Matrix4.translationValues(0.0, 0.0, 0.0),
           child: PhysicalShape(
-            color: AppTheme.white,
+            color: AppTheme.green2,
             elevation: 16.0,
             clipper: TabClipper(
                 radius: Tween<double>(begin: 0.0, end: 1.0)
@@ -162,7 +162,7 @@ class _BottomViewState extends State<BottomView> with TickerProviderStateMixin {
                 child: Container(
                   // alignment: Alignment.center,s
                   decoration: BoxDecoration(
-                    color: AppTheme.darkGrey,
+                    color: AppTheme.green4,
                     /**
                      * 这段代码是一个渐变色设置，使用的是 LinearGradient 类，它属于 Flutter 中用于定义线性渐变的小部件。
                      * 在这里，渐变被应用于某个组件的 decoration 属性，比如一个 Container、BoxDecoration 或者其他可视化元素的背景。
@@ -179,7 +179,7 @@ class _BottomViewState extends State<BottomView> with TickerProviderStateMixin {
                     /// 阴影特效
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.nearlyDarkBlue.withOpacity(0.4),
+                          color: AppTheme.green6.withOpacity(0.4),
                           offset: const Offset(8.0, 16.0),
                           blurRadius: 16.0),
                     ],
@@ -189,7 +189,7 @@ class _BottomViewState extends State<BottomView> with TickerProviderStateMixin {
                     color: Colors.transparent,
                     child: InkWell(
                       /// 设置触摸波纹效果的颜色。这里使用白色的波纹，不过透明度设置为0.1，使得波纹效果非常微弱，几乎看不清，仅有轻微的视觉提示。
-                      splashColor: Colors.white.withOpacity(0.1),
+                      splashColor: AppTheme.white.withOpacity(0.1),
 
                       /// 设置高亮颜色为透明。在材料设计中，高亮颜色是指触摸或点击小部件时的背景颜色。透明表示没有明显的颜色变化。
                       highlightColor: Colors.transparent,
@@ -200,8 +200,7 @@ class _BottomViewState extends State<BottomView> with TickerProviderStateMixin {
                       /// onTap 是一个回调函数，当用户点击这个 InkWell 时会被触发。widget.addClick 可能是外部传入的一个函数，用于处理点击事件。
                       onTap: () => Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => AdditionFormScreen()),
+                        MaterialPageRoute(builder: (context) => ChatScreen()),
                       ),
                       child: const Icon(
                         /// 这是 InkWell 的子小部件，一个图标。

@@ -53,16 +53,13 @@ class _NavigationViewState extends State<NavigationView>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppTheme.background,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: FutureBuilder<bool>(
-          future: _getData(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            return _buildContext(context, snapshot);
-          },
-        ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: FutureBuilder<bool>(
+        future: _getData(),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          return _buildContext(context, snapshot);
+        },
       ),
     );
   }

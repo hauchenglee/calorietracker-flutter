@@ -1,3 +1,4 @@
+import 'package:calorie_tracker_app/util/app_color.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmBtn extends StatelessWidget {
@@ -19,16 +20,15 @@ class ConfirmBtn extends StatelessWidget {
           child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueAccent, // 设置按钮的背景颜色为蓝色
-              foregroundColor: Colors.white, // 设置按钮的点击颜色（文本和图标）
+              backgroundColor: AppTheme.green3, // 设置按钮的背景颜色为蓝色
+              foregroundColor: AppTheme.green6, // 设置按钮的点击颜色（文本和图标）
               shape: RoundedRectangleBorder(
                 // 设置按钮形状
                 borderRadius: BorderRadius.circular(8), // 圆角矩形
               ),
               fixedSize: Size(buttonWidth, 48), // 设置固定尺寸，高度为48
             ),
-            child:
-                const Text("Confirm", style: TextStyle(fontSize: 16)), // 显示按钮文本
+            child: const Text("Confirm", style: TextStyle(fontSize: 16)), // 显示按钮文本
           ),
         );
       },
