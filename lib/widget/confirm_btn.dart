@@ -5,16 +5,20 @@ class ConfirmBtn extends StatelessWidget {
   const ConfirmBtn({
     super.key,
     this.onPressed,
+    required this.message,
+    required this.widthScale,
   });
 
   final VoidCallback? onPressed;
+  final String message;
+  final int widthScale;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         // 使用父组件的最大宽度的1/3作为按钮宽度
-        double buttonWidth = constraints.maxWidth / 2;
+        double buttonWidth = constraints.maxWidth / widthScale;
 
         return Center(
           child: ElevatedButton(
@@ -28,7 +32,7 @@ class ConfirmBtn extends StatelessWidget {
               ),
               fixedSize: Size(buttonWidth, 48), // 设置固定尺寸，高度为48
             ),
-            child: const Text("Confirm", style: TextStyle(fontSize: 16)), // 显示按钮文本
+            child: Text(message, style: TextStyle(fontSize: 16)), // 显示按钮文本
           ),
         );
       },
