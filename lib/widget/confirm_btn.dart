@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class ConfirmBtn extends StatelessWidget {
   const ConfirmBtn({
     super.key,
-    required this.onPressed,
+    this.onPressed,
   });
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {

@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class CancelBtn extends StatelessWidget {
   const CancelBtn({
     super.key,
-    required this.onPressed,
+    this.onPressed,
   });
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
