@@ -31,8 +31,9 @@ class HttpUtil {
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
       } else {
-        String message = 'Failed to load data from POST request: ${response.statusCode}';
-        throw Exception(message);
+        // String message = 'Failed to load data from POST request: ${response.statusCode}';
+        // throw Exception(message);
+        throw Exception(http.Response);
       }
     } catch (e) {
       rethrow;

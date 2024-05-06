@@ -1,4 +1,4 @@
-import 'package:calorie_tracker_app/util/app_color.dart';
+import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'tab_icon_data.dart';

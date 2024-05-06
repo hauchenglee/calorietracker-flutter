@@ -1,5 +1,5 @@
 import 'package:calorie_tracker_app/feature/chat/chat_screen.dart';
-import 'package:calorie_tracker_app/util/app_color.dart';
+import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:calorie_tracker_app/view/bottom/tab_clipper.dart';
 import 'package:calorie_tracker_app/view/bottom/tab_icon_data.dart';
 import 'package:calorie_tracker_app/view/bottom/tab_icons.dart';

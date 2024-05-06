@@ -1,5 +1,5 @@
 class ApiResponse {
-  final int code;
+  final String code;
   final String message;
   final dynamic data;
 

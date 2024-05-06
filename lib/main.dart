@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:calorie_tracker_app/util/app_color.dart';
+import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:calorie_tracker_app/util/app_string.dart';
 import 'package:calorie_tracker_app/view/navigation/navigation_view.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;

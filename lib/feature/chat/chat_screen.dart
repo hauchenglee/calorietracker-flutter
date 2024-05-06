@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:calorie_tracker_app/feature/chat/chat_service.dart';
 import 'package:calorie_tracker_app/util/api_response.dart';
-import 'package:calorie_tracker_app/util/app_color.dart';
+import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:calorie_tracker_app/util/file/image_compress_util.dart';
 import 'package:calorie_tracker_app/widget/cancel_btn.dart';
 import 'package:calorie_tracker_app/widget/confirm_btn.dart';
@@ -20,7 +20,6 @@ class _ChatScreenState extends State<ChatScreen> {
   File? _image;
   bool _isLoading = false; // 加载状态标志
 
-  final TextEditingController _messageController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _calorieController = TextEditingController();
   final TextEditingController _carbohydrateController = TextEditingController();
@@ -28,7 +27,6 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _fatController = TextEditingController();
 
   void _clearFields() {
-    _messageController.clear();
     _nameController.clear();
     _calorieController.clear();
     _carbohydrateController.clear();
@@ -59,7 +57,18 @@ class _ChatScreenState extends State<ChatScreen> {
       if (!mounted) return;
       ApiResponse response2 = await ChatService().chatVersion(response1.data); // 等待版本检查
       if (!mounted) return;
-      CustomDialog().showCustomDialog(context, response2.data.toString());
+
+      // 假设response2.data是一个Map<String, dynamic>类型，其中包含了ChatModel的所有字段
+      Map<String, dynamic> chatData = response2.data;
+
+      CustomDialog().showCustomDialog(context, response2.message);
+
+      // 将获取到的数据填充到TextField的控制器中
+      _nameController.text = chatData['name'] ?? '';
+      _calorieController.text = chatData['calorie']?.toString() ?? '';
+      _carbohydrateController.text = chatData['carbohydrate']?.toString() ?? '';
+      _proteinController.text = chatData['protein']?.toString() ?? '';
+      _fatController.text = chatData['fat']?.toString() ?? '';
     } catch (e) {
       CustomDialog().showCustomDialog(context, e.toString());
     } finally {
@@ -94,17 +103,28 @@ class _ChatScreenState extends State<ChatScreen> {
                     height: 200.0,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: AppTheme.iceBlue2,
+                      color: AppTheme.iceBlue1,
                       boxShadow: [
-                        BoxShadow(color: Colors.black.withOpacity(0.2), offset: Offset(-4, -4), blurRadius: 5, spreadRadius: 1),
-                        BoxShadow(color: Colors.white.withOpacity(0.6), offset: Offset(4, 4), blurRadius: 5, spreadRadius: 1),
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.25), // 深色阴影，半透明
+                          offset: Offset(0, 2), // 阴影偏移量，轻微向下
+                          blurRadius: 5,
+                          spreadRadius: 0,
+                        ),
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.1), // 浅色高光，增强深度感
+                          offset: Offset(0, -2), // 阴影偏移量，轻微向上
+                          blurRadius: 5,
+                          spreadRadius: 0,
+                        ),
                       ],
                     ),
                     child: _image == null
                         ? const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Icon(Icons.image, size: 50),
+                              Icon(Icons.add_photo_alternate_outlined, size: 50),
+                              const SizedBox(height: 10), // Add some space between the container and the buttons
                               Text('Select Your Image'),
                             ],
                           )
@@ -113,7 +133,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             children: [
                               Image.file(_image!, fit: BoxFit.cover), // 展示选择的图片
                               Container(
-                                color: AppTheme.green1.withOpacity(0.5), // 绿色蒙版，透明度50%
+                                color: AppTheme.autumnRed1.withOpacity(0.5), // 绿色蒙版，透明度50%
                               ),
                               Center(
                                 // 在画面中央增加一个重新选取的图标
@@ -129,22 +149,24 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 const SizedBox(height: 20), // Add some space between the container and the buttons
                 Padding(
-                  padding: EdgeInsets.all(2.0), // 为CancelBtn增加5像素的边距
+                  padding: EdgeInsets.all(5.0), // 为CancelBtn增加5像素的边距
                   child: CancelBtn(
                     onPressed: _clearImage,
-                    message: "Cancel",
+                    message: "取消選取",
                     widthScale: 1,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(2.0), // 为CancelBtn增加5像素的边距
+                  padding: EdgeInsets.all(5.0), // 为CancelBtn增加5像素的边距
                   child: ConfirmBtn(
-                    onPressed: _image != null
-                        ? () {
-                            _onPressChat(context, _image!);
-                          }
-                        : null, // 当_image为null时，onPressed设置为null，按钮禁用
-                    message: "Ask AI",
+                    onPressed: () {
+                      if (_image != null) {
+                        _onPressChat(context, _image!);
+                      } else {
+                        CustomDialog().showCustomDialog(context, "請選擇圖片");
+                      }
+                    },
+                    message: "詢問 AI",
                     widthScale: 1,
                   ),
                 ),
@@ -172,31 +194,27 @@ class _ChatScreenState extends State<ChatScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextField(
-            controller: _messageController,
-            decoration: InputDecoration(labelText: 'Message'),
-          ),
-          TextField(
             controller: _nameController,
-            decoration: InputDecoration(labelText: 'Name'),
+            decoration: InputDecoration(labelText: 'Name / 名稱'),
           ),
           TextField(
             controller: _calorieController,
-            decoration: InputDecoration(labelText: 'Calorie'),
+            decoration: InputDecoration(labelText: 'Calorie / 卡路里'),
             keyboardType: TextInputType.number,
           ),
           TextField(
             controller: _carbohydrateController,
-            decoration: InputDecoration(labelText: 'Carbohydrate'),
+            decoration: InputDecoration(labelText: 'Carbohydrate / 碳水化合物'),
             keyboardType: TextInputType.number,
           ),
           TextField(
             controller: _proteinController,
-            decoration: InputDecoration(labelText: 'Protein'),
+            decoration: InputDecoration(labelText: 'Protein / 蛋白質'),
             keyboardType: TextInputType.number,
           ),
           TextField(
             controller: _fatController,
-            decoration: InputDecoration(labelText: 'Fat'),
+            decoration: InputDecoration(labelText: 'Fat / 脂肪'),
             keyboardType: TextInputType.number,
           ),
         ],
@@ -212,21 +230,21 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: ElevatedButton(
+              padding: const EdgeInsets.all(8.0),
+              child: CancelBtn(
                 onPressed: _clearFields,
-                child: Text('Clear'),
-                style: ElevatedButton.styleFrom(backgroundColor: AppTheme.autumnRed5),
+                message: "清空",
+                widthScale: 1,
               ),
             ),
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: ElevatedButton(
+              padding: const EdgeInsets.all(8.0),
+              child: ConfirmBtn(
                 onPressed: _submitData,
-                child: Text('Submit'),
-                style: ElevatedButton.styleFrom(backgroundColor: AppTheme.iceBlue4),
+                message: "儲存結果",
+                widthScale: 1,
               ),
             ),
           ),

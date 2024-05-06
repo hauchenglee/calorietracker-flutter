@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 class AppTheme {
   AppTheme._();
 
+  static const Color background = Color(0xFFFFFFFF);
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color lightWhite = Color(0xFFF2F3F8);
+  static const Color grey = Color(0xFF3A5160);
+  static const Color black = Color(0xFF000000);
+
   static const Color green1 = Color(0xFFecede8);
   static const Color green2 = Color(0xFFe4e6d9);
   static const Color green3 = Color(0xFFc0cfb2);
   static const Color green4 = Color(0xFF8ba888);
   static const Color green5 = Color(0xFF49654e);
   static const Color green6 = Color(0xFF253528);
-
-  static const Color white = Color(0xFFFFFFFF);
-  static const Color grey = Color(0xFF3A5160);
-  static const Color background = Color(0xFFF2F3F8);
 
   static const Color iceBlue1 = Color(0xFFf1f4fb);
   static const Color iceBlue2 = Color(0xFFd5deef);

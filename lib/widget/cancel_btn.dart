@@ -1,4 +1,4 @@
-import 'package:calorie_tracker_app/util/app_color.dart';
+import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class CancelBtn extends StatelessWidget {
@@ -24,11 +24,12 @@ class CancelBtn extends StatelessWidget {
           child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.autumnRed3, // 设置按钮的背景颜色为蓝色
-              foregroundColor: AppTheme.autumnRed1, // 设置按钮的点击颜色（文本和图标）
+              backgroundColor: AppTheme.white, // 设置按钮的背景颜色为蓝色
+              foregroundColor: AppTheme.black, // 设置按钮的点击颜色（文本和图标）
               shape: RoundedRectangleBorder(
                 // 设置按钮形状
-                borderRadius: BorderRadius.circular(8), // 圆角矩形
+                borderRadius: BorderRadius.circular(50), // 圆角矩形
+                side: const BorderSide(color: AppTheme.black, width: 0.5), // 添加黑色边框，宽度为1.0
               ),
               fixedSize: Size(buttonWidth, 48), // 设置固定尺寸，高度为48
             ),
