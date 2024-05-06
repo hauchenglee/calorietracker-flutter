@@ -1,3 +1,4 @@
+import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'tab_icon_data.dart';
@@ -56,7 +57,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
               child: Icon(
                 widget.tabIconData?.iconData,
                 size: 24,
-                color: Colors.grey, // 替换为适当的颜色或AppTheme.lightText
+                color: AppTheme.grey, // 替换为适当的颜色或AppTheme.lightText
               ),
             ),
           ),

@@ -3,13 +3,36 @@ import 'package:flutter/material.dart';
 class AppTheme {
   AppTheme._();
 
+  static const Color background = Color(0xFFFFFFFF);
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color lightWhite = Color(0xFFF2F3F8);
+  static const Color grey = Color(0xFF3A5160);
+  static const Color black = Color(0xFF000000);
+
+  static const Color green1 = Color(0xFFecede8);
+  static const Color green2 = Color(0xFFe4e6d9);
+  static const Color green3 = Color(0xFFc0cfb2);
+  static const Color green4 = Color(0xFF8ba888);
+  static const Color green5 = Color(0xFF49654e);
+  static const Color green6 = Color(0xFF253528);
+
+  static const Color iceBlue1 = Color(0xFFf1f4fb);
+  static const Color iceBlue2 = Color(0xFFd5deef);
+  static const Color iceBlue3 = Color(0xFFb2caee);
+  static const Color iceBlue4 = Color(0xFF89afe0);
+  static const Color iceBlue5 = Color(0xFF618fca);
+  static const Color iceBlue6 = Color(0xFF3a5985);
+
+  static const Color autumnRed1 = Color(0xFFddd5d2);
+  static const Color autumnRed2 = Color(0xFFdedddb);
+  static const Color autumnRed3 = Color(0xFFdbc2bd);
+  static const Color autumnRed4 = Color(0xFFe0576b);
+  static const Color autumnRed5 = Color(0xFFc62038);
+  static const Color autumnRed6 = Color(0xFFbb031d);
+
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFEFEFE);
-  static const Color white = Color(0xFFFFFFFF);
-  static const Color background = Color(0xFFF2F3F8);
-  static const Color grey = Color(0xFF3A5160);
   static const Color darkGrey = Color(0xFF313A44);
-
   static const Color nearlyDarkBlue = Color(0xFF2633C5);
   static const Color nearlyBlue = Color(0xFF00B6F0);
   static const Color nearlyBlack = Color(0xFF213333);
@@ -32,7 +55,8 @@ class AppTheme {
     caption: caption,
   );
 
-  static const TextStyle display1 = TextStyle( // h4 -> display1
+  static const TextStyle display1 = TextStyle(
+    // h4 -> display1
     fontFamily: fontName,
     fontWeight: FontWeight.bold,
     fontSize: 36,
@@ -41,7 +65,8 @@ class AppTheme {
     color: darkerText,
   );
 
-  static const TextStyle headline = TextStyle( // h5 -> headline
+  static const TextStyle headline = TextStyle(
+    // h5 -> headline
     fontFamily: fontName,
     fontWeight: FontWeight.bold,
     fontSize: 24,
@@ -49,7 +74,8 @@ class AppTheme {
     color: darkerText,
   );
 
-  static const TextStyle title = TextStyle( // h6 -> title
+  static const TextStyle title = TextStyle(
+    // h6 -> title
     fontFamily: fontName,
     fontWeight: FontWeight.bold,
     fontSize: 16,
@@ -57,7 +83,8 @@ class AppTheme {
     color: darkerText,
   );
 
-  static const TextStyle subtitle = TextStyle( // subtitle2 -> subtitle
+  static const TextStyle subtitle = TextStyle(
+    // subtitle2 -> subtitle
     fontFamily: fontName,
     fontWeight: FontWeight.w400,
     fontSize: 14,
@@ -65,7 +92,8 @@ class AppTheme {
     color: darkText,
   );
 
-  static const TextStyle body2 = TextStyle( // body1 -> body2
+  static const TextStyle body2 = TextStyle(
+    // body1 -> body2
     fontFamily: fontName,
     fontWeight: FontWeight.w400,
     fontSize: 14,
@@ -73,7 +101,8 @@ class AppTheme {
     color: darkText,
   );
 
-  static const TextStyle body1 = TextStyle( // body2 -> body1
+  static const TextStyle body1 = TextStyle(
+    // body2 -> body1
     fontFamily: fontName,
     fontWeight: FontWeight.w400,
     fontSize: 16,
@@ -81,7 +110,8 @@ class AppTheme {
     color: darkText,
   );
 
-  static const TextStyle caption = TextStyle( // Caption -> caption
+  static const TextStyle caption = TextStyle(
+    // Caption -> caption
     fontFamily: fontName,
     fontWeight: FontWeight.w400,
     fontSize: 12,

@@ -2,7 +2,7 @@ import 'package:calorie_tracker_app/feature/diary/diary_screen.dart';
 import 'package:calorie_tracker_app/feature/food/food_screen.dart';
 import 'package:calorie_tracker_app/feature/home/home_screen.dart';
 import 'package:calorie_tracker_app/feature/more/more_screen.dart';
-import 'package:calorie_tracker_app/util/app_color.dart';
+import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:calorie_tracker_app/view/bottom/bottom_view.dart';
 import 'package:calorie_tracker_app/view/bottom/tab_icon_data.dart';
 import 'package:flutter/material.dart';
@@ -53,16 +53,13 @@ class _NavigationViewState extends State<NavigationView>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppTheme.background,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: FutureBuilder<bool>(
-          future: _getData(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            return _buildContext(context, snapshot);
-          },
-        ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: FutureBuilder<bool>(
+        future: _getData(),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          return _buildContext(context, snapshot);
+        },
       ),
     );
   }

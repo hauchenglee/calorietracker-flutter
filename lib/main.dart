@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:calorie_tracker_app/util/app_color.dart';
+import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:calorie_tracker_app/util/app_string.dart';
 import 'package:calorie_tracker_app/view/navigation/navigation_view.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -10,6 +10,12 @@ import 'package:flutter/services.dart';
 void main() async {
   // 确保Flutter小部件绑定已初始化，这对于所有后续操作都是必要的
   WidgetsFlutterBinding.ensureInitialized();
+
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    // 在这里添加错误记录到日志系统或发送到服务器
+  };
+
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
@@ -39,6 +45,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
+        scaffoldBackgroundColor: AppTheme.background, // 设置预设的背景色
       ),
       home: NavigationView(),
     );
