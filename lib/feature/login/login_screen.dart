@@ -1,6 +1,15 @@
+import 'package:calorie_tracker_app/feature/account/account_bloc.dart';
+import 'package:calorie_tracker_app/feature/account/account_event.dart';
+import 'package:calorie_tracker_app/feature/account/account_model.dart';
+import 'package:calorie_tracker_app/util/api_response.dart';
 import 'package:calorie_tracker_app/util/app_theme.dart';
+import 'package:calorie_tracker_app/widget/custom_dialog.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../widget/confirm_dialog.dart';
+import 'login_service.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -11,6 +20,60 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  bool _isLoading = false; // 加载状态标志
+
+  void _onPressLogin(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      // 首先检查邮箱是否已存在
+      ApiResponse checkExistResponse = await LoginService().checkExist(
+        email: _emailController.text,
+      );
+
+      if (!mounted) return;
+
+      if (checkExistResponse.data == "true") {
+        // 如果邮箱已存在，直接执行登录
+        ApiResponse loginResponse = await LoginService().login(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+        if (!mounted) return;
+        CustomDialog().showCustomDialog(context, loginResponse.message);
+      } else {
+        // 如果邮箱不存在，询问用户是否注册
+        bool? isConfirm = await showConfirmationDialog(
+          context: context,
+          title: '账户不存在',
+          content: '您希望注册新账户吗？',
+          confirmText: '是',
+          cancelText: '否',
+        );
+
+        // 如果用户选择是，则执行注册
+        if (isConfirm == true) {
+          ApiResponse registrationResponse = await LoginService().register(
+            email: _emailController.text,
+            password: _passwordController.text,
+          );
+          if (!mounted) return;
+          CustomDialog().showCustomDialog(context, registrationResponse.message);
+        }
+      }
+    } catch (e) {
+      if (!mounted) return;
+      CustomDialog().showCustomDialog(context, e.toString());
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         // 表单验证通过时执行的代码
+                        _onPressLogin(context);
                       }
                     },
                     style: ElevatedButton.styleFrom(

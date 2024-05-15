@@ -7,9 +7,12 @@ import 'package:mime/mime.dart'; // 用于处理文件类型的MIME
 
 class HttpUtil {
   // 发送 GET 请求的函数
-  static Future<Map<String, dynamic>> sendGet(String url) async {
+  static Future<Map<String, dynamic>> sendGet(String url, String token) async {
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(url), headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token", // 添加Bearer token
+      });
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
       } else {
@@ -21,7 +24,30 @@ class HttpUtil {
   }
 
   // 发送 POST 请求的函数（接收JSON数据）
-  static Future<Map<String, dynamic>> sendPost(String url, Map<String, dynamic> json) async {
+  static Future<Map<String, dynamic>> sendPost(String url, Map<String, dynamic> json, String token) async {
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token", // 在这里添加Bearer token
+        },
+        body: jsonEncode(json),
+      );
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        // String message = 'Failed to load data from POST request: ${response.statusCode}';
+        // throw Exception(message);
+        throw Exception(http.Response);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // 发送 POST (no token) 请求的函数（接收JSON数据）
+  static Future<Map<String, dynamic>> sendPostNoToken(String url, Map<String, dynamic> json) async {
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -41,10 +67,15 @@ class HttpUtil {
   }
 
   // 发送 POST 请求的函数（上传文件）
-  static Future<Map<String, dynamic>> sendPostWithFile(String url, File file, String fieldName) async {
+  static Future<Map<String, dynamic>> sendPostWithFile(String url, File file, String fieldName, String token) async {
     try {
       var uri = Uri.parse(url);
       var request = http.MultipartRequest('POST', uri);
+
+      // 添加Authorization头部
+      request.headers.addAll({
+        "Authorization": "Bearer $token"
+      });
 
       // 使用mime包来查找文件的MIME类型
       var mimeTypeData = lookupMimeType(file.path, headerBytes: [0xFF, 0xD8])?.split('/');

@@ -6,6 +6,7 @@ class AccountModel {
   final String email;
   final String password;
   final String status;
+  final String token;
 
   AccountModel({
     required this.id,
@@ -13,6 +14,7 @@ class AccountModel {
     required this.email,
     required this.password,
     required this.status,
+    required this.token,
   });
 
   // 将对象转换为JSON格式的Map
@@ -23,6 +25,7 @@ class AccountModel {
       'email': email,
       'password': password,
       'status': status,
+      'token': token,
     };
   }
 
@@ -34,6 +37,7 @@ class AccountModel {
       email: json['email'] as String,
       password: json['password'] as String,
       status: json['status'] as String,
+      token: json['token'] as String,
     );
   }
 
