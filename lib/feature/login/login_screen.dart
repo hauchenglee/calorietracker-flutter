@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:calorie_tracker_app/util/api_response.dart';
 import 'package:calorie_tracker_app/util/app_theme.dart';
+import 'package:calorie_tracker_app/widget/confirm_dialog.dart';
 import 'package:calorie_tracker_app/widget/custom_dialog.dart';
-import 'package:calorie_tracker_app/feature/account/bloc/account_bloc.dart';
-import 'package:calorie_tracker_app/feature/account/bloc/account_event.dart';
-import 'package:calorie_tracker_app/feature/account/bloc/account_state.dart';
-import 'package:calorie_tracker_app/feature/login/login_service.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
+
+import 'login_service.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,122 +17,165 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  bool _isLoading = false; // 加载状态标志
   bool _isPasswordVisible = false;
+
+  void _onPressLogin(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      // 首先检查邮箱是否已存在
+      ApiResponse checkExistResponse = await LoginService().checkExist(
+        email: _emailController.text,
+      );
+
+      // 如果组件已卸载，停止执行
+      if (!mounted) return;
+
+      if (checkExistResponse.data == "true") {
+        // 如果邮箱已存在，直接执行登录
+        ApiResponse loginResponse = await LoginService().login(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+        // 如果组件已卸载，停止执行
+        if (!mounted) return;
+
+        // 显示登录结果的对话框
+        CustomDialog().showCustomDialog(context, loginResponse.message);
+      } else {
+        // 如果邮箱不存在，询问用户是否注册
+        bool? isConfirm = await showConfirmationDialog(
+          context: context,
+          title: '账户不存在',
+          content: '您希望注册新账户吗？',
+          confirmText: '是',
+          cancelText: '否',
+        );
+
+        // 如果用户选择是，则执行注册
+        if (isConfirm == true) {
+          ApiResponse registrationResponse = await LoginService().register(
+            email: _emailController.text,
+            password: _passwordController.text,
+          );
+          // 如果组件已卸载，停止执行
+          if (!mounted) return;
+
+          // 显示注册结果的对话框
+          CustomDialog().showCustomDialog(context, registrationResponse.message);
+        }
+      }
+    } catch (e) {
+      if (!mounted) return;
+      CustomDialog().showCustomDialog(context, e.toString());
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenHeight = MediaQuery.of(context).size.height; // 获取屏幕高度
 
     return Scaffold(
+      // 添加这行代码，防止键盘弹出时界面重新布局
       resizeToAvoidBottomInset: false,
-      body: BlocProvider(
-        create: (context) => AccountBloc(LoginService()),
-        child: CustomPaint(
-          painter: BackgroundPainter(),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: screenHeight * 1 / 10),
-                    const Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.white,
+      body: CustomPaint(
+        painter: BackgroundPainter(),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: screenHeight * 1 / 10),
+                  const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.white,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  TextFormField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: AppTheme.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: 'email@account.com',
+                      hintStyle: TextStyle(color: Colors.grey[600]),
+                      prefixIcon: Icon(Icons.person, color: Colors.grey[600]),
+                    ),
+                    validator: (value) => _validateEmail(value ?? '') ? null : '无效的邮箱地址',
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: !_isPasswordVisible,
+                    keyboardType: TextInputType.visiblePassword,
+                    textInputAction: TextInputAction.done,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: 'Password',
+                      hintStyle: TextStyle(color: Colors.grey[600]),
+                      prefixIcon: Icon(Icons.lock, color: Colors.grey[600]),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          color: Colors.grey[600],
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
                       ),
                     ),
-                    const SizedBox(height: 40),
-                    TextFormField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: AppTheme.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide.none,
-                        ),
-                        hintText: 'email@account.com',
-                        hintStyle: TextStyle(color: Colors.grey[600]),
-                        prefixIcon: Icon(Icons.person, color: Colors.grey[600]),
+                    validator: (value) => _validatePassword(value ?? '') ? null : '密码必须为6-20位英文或数字',
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        // 表单验证通过时执行的代码
+                        _onPressLogin(context);
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: AppTheme.loginBtn,
+                      onPrimary: Colors.white,
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
                       ),
-                      validator: (value) => _validateEmail(value ?? '') ? null : '无效的邮箱地址',
                     ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: !_isPasswordVisible,
-                      keyboardType: TextInputType.visiblePassword,
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide.none,
-                        ),
-                        hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.grey[600]),
-                        prefixIcon: Icon(Icons.lock, color: Colors.grey[600]),
-                        suffixIcon: IconButton(
-                          icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off, color: Colors.grey[600]),
-                          onPressed: () {
-                            setState(() {
-                              _isPasswordVisible = !_isPasswordVisible;
-                            });
-                          },
-                        ),
-                      ),
-                      validator: (value) => _validatePassword(value ?? '') ? null : '密码必须为6-20位英文或数字',
-                    ),
-                    const SizedBox(height: 20),
-                    BlocConsumer<AccountBloc, AccountState>(
-                      listener: (context, state) {
-                        if (state is AccountLoaded) {
-                          CustomDialog().showCustomDialog(context, '登录成功');
-                        } else if (state is AccountError) {
-                          CustomDialog().showCustomDialog(context, state.message);
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is AccountLoading) {
-                          return CircularProgressIndicator();
-                        }
-                        return ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              context.read<AccountBloc>().add(
-                                    LoginRequested(
-                                      _emailController.text,
-                                      _passwordController.text,
-                                    ),
-                                  );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppTheme.loginBtn,
-                            foregroundColor: Colors.white,
-                            minimumSize: const Size(double.infinity, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                          ),
-                          child: const Text('Register / Login'),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 15),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('Forgot your password?', style: TextStyle(color: AppTheme.white)),
-                    ),
-                  ],
-                ),
+                    child: const Text('Register / Login'),
+                  ),
+                  const SizedBox(height: 15),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('Forgot your password?', style: TextStyle(color: AppTheme.white)),
+                  ),
+                ],
               ),
             ),
           ),
