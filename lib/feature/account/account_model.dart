@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-class AccountModel {
+import 'package:equatable/equatable.dart';
+
+class AccountModel extends Equatable {
   final String id;
   final String name;
   final String email;
@@ -50,4 +52,7 @@ class AccountModel {
   String toJsonString() {
     return json.encode(toJson());
   }
+
+  @override
+  List<Object?> get props => [id, name, email, password, status, token];
 }

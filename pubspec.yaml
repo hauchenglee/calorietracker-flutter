@@ -47,6 +47,7 @@ dependencies:
   http: ^1.0.0
   mime: ^1.0.2
   email_validator: ^2.1.17
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:
