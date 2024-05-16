@@ -1,14 +1,10 @@
-import 'package:calorie_tracker_app/feature/account/account_bloc.dart';
-import 'package:calorie_tracker_app/feature/account/account_event.dart';
-import 'package:calorie_tracker_app/feature/account/account_model.dart';
 import 'package:calorie_tracker_app/util/api_response.dart';
 import 'package:calorie_tracker_app/util/app_theme.dart';
+import 'package:calorie_tracker_app/widget/confirm_dialog.dart';
 import 'package:calorie_tracker_app/widget/custom_dialog.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../widget/confirm_dialog.dart';
 import 'login_service.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoading = false; // 加载状态标志
+  bool _isPasswordVisible = false;
 
   void _onPressLogin(BuildContext context) async {
     setState(() {
@@ -33,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text,
       );
 
+      // 如果组件已卸载，停止执行
       if (!mounted) return;
 
       if (checkExistResponse.data == "true") {
@@ -41,7 +39,10 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _emailController.text,
           password: _passwordController.text,
         );
+        // 如果组件已卸载，停止执行
         if (!mounted) return;
+
+        // 显示登录结果的对话框
         CustomDialog().showCustomDialog(context, loginResponse.message);
       } else {
         // 如果邮箱不存在，询问用户是否注册
@@ -59,7 +60,10 @@ class _LoginScreenState extends State<LoginScreen> {
             email: _emailController.text,
             password: _passwordController.text,
           );
+          // 如果组件已卸载，停止执行
           if (!mounted) return;
+
+          // 显示注册结果的对话框
           CustomDialog().showCustomDialog(context, registrationResponse.message);
         }
       }
@@ -104,6 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 40),
                   TextFormField(
                     controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: AppTheme.white,
@@ -120,10 +125,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 20),
                   TextFormField(
                     controller: _passwordController,
-                    obscureText: true,
+                    obscureText: !_isPasswordVisible,
+                    keyboardType: TextInputType.visiblePassword,
+                    textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: AppTheme.white,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: BorderSide.none,
@@ -131,6 +138,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       hintText: 'Password',
                       hintStyle: TextStyle(color: Colors.grey[600]),
                       prefixIcon: Icon(Icons.lock, color: Colors.grey[600]),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          color: Colors.grey[600],
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
                     ),
                     validator: (value) => _validatePassword(value ?? '') ? null : '密码必须为6-20位英文或数字',
                   ),
