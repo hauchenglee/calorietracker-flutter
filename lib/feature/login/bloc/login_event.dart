@@ -14,7 +14,7 @@ class OnCheckExistEvent extends LoginEvent {
   OnCheckExistEvent(this.email, this.password);
 
   @override
-  List<Object?> get props => [email];
+  List<Object?> get props => [email, password];  // 包含所有属性以确保正确比较
 }
 
 // 执行登录的事件

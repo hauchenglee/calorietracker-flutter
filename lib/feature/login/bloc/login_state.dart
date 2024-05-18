@@ -39,6 +39,7 @@ class LoginErrorState extends LoginState {
   List<Object?> get props => [message]; // 使用message作为比较基准，当错误信息相同时，视为相同状态。
 }
 
+// 注册成功状态，类似于登录成功状态，也可能存储账户信息或其他成功后的反馈。
 class RegisterSuccessState extends LoginState {
   final AccountModel account;
 
@@ -48,6 +49,7 @@ class RegisterSuccessState extends LoginState {
   List<Object?> get props => [account];
 }
 
+// 注册失败状态，存储错误信息。
 class RegisterErrorState extends LoginState {
   final String message;
 
