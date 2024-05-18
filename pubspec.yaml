@@ -46,6 +46,9 @@ dependencies:
   json_annotation: ^4.8.0
   http: ^1.0.0
   mime: ^1.0.2
+  email_validator: ^2.1.17
+  equatable: ^2.0.3
+  flutter_secure_storage: ^9.1.0
 
 dev_dependencies:
   flutter_test:

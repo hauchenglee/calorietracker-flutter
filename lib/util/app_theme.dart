@@ -30,6 +30,10 @@ class AppTheme {
   static const Color autumnRed5 = Color(0xFFc62038);
   static const Color autumnRed6 = Color(0xFFbb031d);
 
+  static const Color login1 = Color(0xFFdfc4fc);
+  static const Color login2 = Color(0xFF91c6fc);
+  static const Color loginBtn = Color(0xFF6a75cf);
+
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFEFEFE);
   static const Color darkGrey = Color(0xFF313A44);

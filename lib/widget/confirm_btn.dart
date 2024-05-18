@@ -6,7 +6,7 @@ class ConfirmBtn extends StatelessWidget {
     super.key,
     this.onPressed,
     required this.message,
-    required this.widthScale,
+    this.widthScale = 1,
   });
 
   final VoidCallback? onPressed;

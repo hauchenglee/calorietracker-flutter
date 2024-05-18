@@ -53,9 +53,9 @@ class _ChatScreenState extends State<ChatScreen> {
       _isLoading = true;
     });
     try {
-      ApiResponse response1 = await ChatService().uploadImage(imageFile); // 等待图片上传
+      ApiResponse response1 = await ChatService().uploadImage(imageFile: imageFile); // 等待图片上传
       if (!mounted) return;
-      ApiResponse response2 = await ChatService().chatVersion(response1.data); // 等待版本检查
+      ApiResponse response2 = await ChatService().chatVersion(imageName: response1.data); // 等待版本检查
       if (!mounted) return;
 
       // 假设response2.data是一个Map<String, dynamic>类型，其中包含了ChatModel的所有字段
