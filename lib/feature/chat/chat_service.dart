@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:calorie_tracker_app/app_config.dart';
+import 'package:calorie_tracker_app/config/app_config.dart';
 import 'package:calorie_tracker_app/util/api_response.dart'; // 用于设置Content-Type
 import 'package:calorie_tracker_app/util/http_util.dart';
 

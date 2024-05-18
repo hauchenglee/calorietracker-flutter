@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../config/token_storage.dart';
 import '../../../util/api_response.dart';
 import '../../account/account_model.dart';
 import '../login_service.dart';
@@ -44,6 +45,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         // 直接尝试解析AccountModel，如果数据有问题将抛出异常
         AccountModel account = AccountModel.fromJson(response.data);
         currentAccount = account;  // 更新当前账户信息
+        // 存储令牌
+        await TokenStorage().storeToken(account.token);
         emit(LoginSuccessState(account)); // 发射成功状态
       } else {
         emit(LoginErrorState(response.message)); // API返回了失败消息

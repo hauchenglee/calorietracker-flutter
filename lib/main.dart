@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'feature/login/bloc/login_bloc.dart';
-import 'feature/login/login_screen.dart';
+import 'init_screen.dart';
 
 void main() async {
   // 确保Flutter小部件绑定已初始化，这对于所有后续操作都是必要的
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           platform: TargetPlatform.iOS,
           scaffoldBackgroundColor: AppTheme.background, // 设置预设的背景色
         ),
-        home: LoginScreen(), // Start the app with the LoginScreen
+        home: InitScreen(), // Start the app with the LoginScreen
       ),
     );
   }
