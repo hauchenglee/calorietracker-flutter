@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:calorie_tracker_app/feature/dashboard/bloc/dashboard_bloc.dart';
 import 'package:calorie_tracker_app/util/app_string.dart';
 import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -38,8 +39,15 @@ class MyApp extends StatelessWidget {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
 
-    return BlocProvider(
-      create: (_) => LoginBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LoginBloc>(
+          create: (context) => LoginBloc(),
+        ),
+        BlocProvider<DashboardBloc>(
+          create: (context) => DashboardBloc(),
+        ),
+      ],
       child: MaterialApp(
         title: APP_NAME,
         debugShowCheckedModeBanner: false,

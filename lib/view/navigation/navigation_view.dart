@@ -1,6 +1,6 @@
 import 'package:calorie_tracker_app/feature/diary/diary_screen.dart';
 import 'package:calorie_tracker_app/feature/food/food_screen.dart';
-import 'package:calorie_tracker_app/feature/home/home_screen.dart';
+import 'package:calorie_tracker_app/feature/dashboard/dashboard_screen.dart';
 import 'package:calorie_tracker_app/feature/more/more_screen.dart';
 import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:calorie_tracker_app/view/bottom/bottom_view.dart';
@@ -39,7 +39,7 @@ class _NavigationViewState extends State<NavigationView>
         duration: const Duration(milliseconds: 600), vsync: this);
 
     // 4. 创建tabBody，传入animationController
-    tabBody = HomeScreen(animationController: animationController);
+    tabBody = DashboardScreen(animationController: animationController);
 
     // 5. 调用父类的initState方法
     super.initState();
@@ -103,7 +103,7 @@ class _NavigationViewState extends State<NavigationView>
     }
     switch (index) {
       case 0:
-        return HomeScreen(animationController: animationController);
+        return DashboardScreen(animationController: animationController);
       case 1:
         return FoodScreen(animationController: animationController);
       case 2:
@@ -111,7 +111,7 @@ class _NavigationViewState extends State<NavigationView>
       case 3:
         return MoreScreen(animationController: animationController);
       default:
-        return HomeScreen(animationController: animationController);
+        return DashboardScreen(animationController: animationController);
     }
   }
 }
