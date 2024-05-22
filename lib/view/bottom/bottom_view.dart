@@ -51,7 +51,7 @@ class _BottomViewState extends State<BottomView> with TickerProviderStateMixin {
         return Transform(
           transform: Matrix4.translationValues(0.0, 0.0, 0.0),
           child: PhysicalShape(
-            color: AppTheme.green2,
+            color: AppTheme.white,
             elevation: 16.0,
             clipper: TabClipper(
                 radius: Tween<double>(begin: 0.0, end: 1.0)
@@ -162,7 +162,7 @@ class _BottomViewState extends State<BottomView> with TickerProviderStateMixin {
                 child: Container(
                   // alignment: Alignment.center,s
                   decoration: BoxDecoration(
-                    color: AppTheme.green4,
+                    color: AppTheme.green5,
                     /**
                      * 这段代码是一个渐变色设置，使用的是 LinearGradient 类，它属于 Flutter 中用于定义线性渐变的小部件。
                      * 在这里，渐变被应用于某个组件的 decoration 属性，比如一个 Container、BoxDecoration 或者其他可视化元素的背景。
