@@ -1,3 +1,4 @@
+import 'package:calorie_tracker_app/feature/dashboard/dashboard_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class DashboardState extends Equatable {
@@ -7,19 +8,15 @@ abstract class DashboardState extends Equatable {
 
 class DashboardInitialState extends DashboardState {}
 
-class DashboardTokenValid extends DashboardState {}
+class DashboardLoadingState extends DashboardState {}
 
-class DashboardTokenInvalid extends DashboardState {}
+class DashboardLoadedState extends DashboardState {
+  final List<DashboardModel> dashboards; // 根据你的数据类型调整
 
-class DashboardLoading extends DashboardState {}
-
-class DashboardSuccessState extends DashboardState {
-  final String message;
-
-  DashboardSuccessState(this.message);
+  DashboardLoadedState(this.dashboards);
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [dashboards];
 }
 
 class DashboardErrorState extends DashboardState {

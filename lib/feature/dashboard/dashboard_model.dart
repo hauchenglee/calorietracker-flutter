@@ -70,7 +70,7 @@ class DashboardModel extends Equatable {
   factory DashboardModel.fromJson(Map<String, dynamic> json) {
     return DashboardModel(
       id: json['id'] as String,
-      accountId: json['accountId'] as String,
+      accountId: json['account']['id'] as String,
       calorieLimit: (json['calorieLimit'] as num).toDouble(),
       calorieIntake: (json['calorieIntake'] as num).toDouble(),
       caloriePercent: (json['caloriePercent'] as num).toDouble(),

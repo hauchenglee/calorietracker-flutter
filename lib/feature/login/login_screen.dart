@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../view/navigation/navigation_view.dart';
+import '../../widget/custom_dialog.dart';
 import 'bloc/login_bloc.dart';
 import 'bloc/login_event.dart';
 import 'bloc/login_state.dart';
@@ -34,19 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _setLoadingFalse();
         } else if (state is LoginErrorState || state is RegisterErrorState) {
           if (!mounted) return;  // 同样，确保在显示对话框前，当前 widget 仍然被挂载
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text('错误'),
-              content: Text(state is LoginErrorState ? state.message : (state as RegisterErrorState).message),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('关闭'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            ),
-          );
+          CustomDialog().showCustomDialog(context, state is LoginErrorState ? state.message : (state as RegisterErrorState).message);
           _setLoadingFalse();
         } else if (state is AskRegisterState) {
           if (!mounted) return;
