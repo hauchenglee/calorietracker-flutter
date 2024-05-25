@@ -1,9 +1,10 @@
+import 'package:calorie_tracker_app/feature/dashboard/dashboard_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../util/app_theme.dart';
 import '../../widget/custom_dialog.dart';
-import '../../widget/speedometer_number.dart';
+import '../../widget/speedometer_all.dart';
 import 'bloc/dashboard_bloc.dart';
 import 'bloc/dashboard_event.dart';
 import 'bloc/dashboard_state.dart';
@@ -27,24 +28,35 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<DashboardBloc, DashboardState>(
+    return BlocConsumer<DashboardBloc, DashboardState>(
       listener: (context, state) {
-        if (state is DashboardLoadingState) {
+        if (state is DashboardLoadedState) {
           if (!mounted) return;
-        } else if (state is DashboardLoadedState) {
-          if (!mounted) return;
+          // 你可以在这里处理一些状态加载完成后的逻辑，但不是构建小部件
         } else if (state is DashboardErrorState) {
           if (!mounted) return;
           CustomDialog().showCustomDialog(context, state.message);
         }
       },
-      child: buildBody(context),
+      builder: (context, state) {
+        if (state is DashboardLoadedState) {
+          return buildBody(context, state.dashboards);
+        } else if (state is DashboardErrorState) {
+          // 已经有上面listener小部件了，不必下面重绘ui
+        }
+        // 默认显示加载中界面
+        return buildLoading(); // 确保这个函数已正确定义
+      },
     );
   }
 
-  buildBody(BuildContext context) {
+  buildBody(BuildContext context, List<DashboardModel> dashboards) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+
+    double percent = dashboards.isNotEmpty ? dashboards.first.caloriePercent : 0.0;
+    double currentNumber = dashboards.isNotEmpty ? dashboards.first.calorieIntake : 0.0;
+    double totalNumber = dashboards.isNotEmpty ? dashboards.first.calorieLimit : 0.0;
 
     return Scaffold(
       appBar: AppBar(
@@ -54,35 +66,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: screenHeight * 0.1),
             Container(
               width: screenWidth,
               height: screenHeight * 0.4, // 根据需要调整大小
-              // color: Colors.blue, // 为了可视化区分，设置颜色
               child: Center(
-                child: SpeedometerNumber(currentNumber: 1750.0, totalNumber: 2000.0, size: 300, color: AppTheme.iceBlue4), // 设置初始百分比为0.5,,
-              ),
-            ),
-            Container(
-              width: screenWidth,
-              height: screenHeight * 0.4, // 根据需要调整大小
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // SpeedometerPercent(currentNumber: 1000.0, totalNumber: 2000.0, size: 300, color: AppTheme.iceBlue4), // 设置初始百分比为0.5,,
-                ],
-              ),
-            ),
-            Container(
-              width: screenWidth,
-              height: screenHeight * 0.6, // 根据需要调整大小
-              color: Colors.orange,
-              child: Center(
-                child: Text('第三层组件'),
+                child: SpeedometerAll(percent: percent, currentNumber: currentNumber, totalNumber: totalNumber, size: 300, color: AppTheme.circleForward),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget buildLoading() {
+    return Center(child: CircularProgressIndicator());
   }
 }
