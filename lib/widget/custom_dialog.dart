@@ -10,7 +10,7 @@ class CustomDialog {
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: const Text("OK"),
+              child: const Text("CLOSE"),
               onPressed: () => Navigator.of(context).pop(), // 关闭对话框
             ),
           ],

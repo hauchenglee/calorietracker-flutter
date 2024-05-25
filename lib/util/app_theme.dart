@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class AppTheme {
   AppTheme._();
 
-  static const Color background = Color(0xFFFFFFFF);
+  static const Color background = Color(0xFFfafbff);
   static const Color white = Color(0xFFFFFFFF);
   static const Color lightWhite = Color(0xFFF2F3F8);
   static const Color grey = Color(0xFF3A5160);
   static const Color black = Color(0xFF000000);
+
+  static const Color circleForward = Color(0xFF4f93ea);
+  static const Color circleBackward = Color(0xFFebefff);
+  static const Color circleText = Color(0xFF393e68);
 
   static const Color green1 = Color(0xFFecede8);
   static const Color green2 = Color(0xFFe4e6d9);

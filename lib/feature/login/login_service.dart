@@ -49,4 +49,17 @@ class LoginService {
     ApiResponse response = ApiResponse.fromJson(result);
     return response;
   }
+
+  /// TODO
+  Future<ApiResponse> refreshToken({required String email, required String password}) async {
+    var url = '$BASE_URL/refreshToken';
+    Map<String, dynamic> requestBody = {
+      'email': email,
+      'password': password,
+    };
+
+    Map<String, dynamic> result = await HttpUtil.sendPostNoToken(url, requestBody);
+    ApiResponse response = ApiResponse.fromJson(result);
+    return response;
+  }
 }
