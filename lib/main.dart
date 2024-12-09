@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:calorie_tracker_app/feature/dashboard/bloc/dashboard_bloc.dart';
+import 'package:calorie_tracker_app/feature/food_record/food_record_screen.dart';
 import 'package:calorie_tracker_app/util/app_string.dart';
 import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -55,9 +56,9 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           textTheme: AppTheme.textTheme,
           platform: TargetPlatform.iOS,
-          scaffoldBackgroundColor: AppTheme.background, // 设置预设的背景色
+          scaffoldBackgroundColor: AppTheme.red, // 设置预设的背景色
         ),
-        home: InitScreen(), // Start the app with the LoginScreen
+        home: FoodRecordScreen(), // Start the app with the LoginScreen
       ),
     );
   }
