@@ -1,6 +1,6 @@
-# calorietrackerapp
+# calorietracker flutter
 
-calorietrackerapp
+calorietracker flutter
 
 ## Getting Started
 
