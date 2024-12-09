@@ -1,6 +1,6 @@
-import 'package:calorie_tracker_app/feature/diary/diary_screen.dart';
-import 'package:calorie_tracker_app/feature/food/food_screen.dart';
 import 'package:calorie_tracker_app/feature/dashboard/dashboard_screen.dart';
+import 'package:calorie_tracker_app/feature/food/food_screen.dart';
+import 'package:calorie_tracker_app/feature/food_record/food_record_screen.dart';
 import 'package:calorie_tracker_app/feature/more/more_screen.dart';
 import 'package:calorie_tracker_app/util/app_theme.dart';
 import 'package:calorie_tracker_app/view/bottom/bottom_view.dart';
@@ -14,8 +14,7 @@ class NavigationView extends StatefulWidget {
   _NavigationViewState createState() => _NavigationViewState();
 }
 
-class _NavigationViewState extends State<NavigationView>
-    with TickerProviderStateMixin {
+class _NavigationViewState extends State<NavigationView> with TickerProviderStateMixin {
   AnimationController? animationController;
 
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
@@ -35,8 +34,7 @@ class _NavigationViewState extends State<NavigationView>
     tabIconsList[0].isSelected = true;
 
     // 3. 初始化animationController
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 600), vsync: this);
+    animationController = AnimationController(duration: const Duration(milliseconds: 600), vsync: this);
 
     // 4. 创建tabBody，传入animationController
     tabBody = DashboardScreen(animationController: animationController);
@@ -107,7 +105,7 @@ class _NavigationViewState extends State<NavigationView>
       case 1:
         return FoodScreen(animationController: animationController);
       case 2:
-        return DiaryScreen(animationController: animationController);
+        return FoodRecordScreen(animationController: animationController);
       case 3:
         return MoreScreen(animationController: animationController);
       default:
